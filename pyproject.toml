@@ -1,0 +1,21 @@
+[project]
+name = "marimo-css"
+version = "0.1.1"
+description = "Write CSS in a marimo notebook"
+readme = "README.md"
+authors = [
+    { name = "Deufel", email = "MDeufel13@gmail.com" }
+]
+requires-python = ">=3.14"
+dependencies = [
+    "marimo>=0.21.1",
+    "marimo-dev>=0.3.8",
+]
+
+[build-system]
+requires = ["uv_build>=0.9.18,<0.10.0"]
+build-backend = "uv_build"
+
+
+[project.scripts]
+css-lint = "marimo_css.cli:main"

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html><head><script type="module" src="https://cdn.jsdelivr.net/gh/starfederation/datastar@1.0.0-RC.8/bundles/datastar.js"></script><script src="https://cdn.jsdelivr.net/gh/gnat/css-scope-inline@main/script.js"></script><script src="js/highlight.js" type="module"></script><title>core - marimo-css</title><style>
+            * { scrollbar-gutter:stable; box-sizing:border-box; }
+            body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; margin:0; background:#121212; }
+            code { font-family:'SF Mono',Consolas,monospace; }
+            .layout { display:flex; height:100vh; }
+            .sidenav { width:220px; background:#1a1a1a; padding:1rem; overflow-y:auto; display:flex; flex-direction:column; gap:0.25rem; flex-shrink:0; }
+            .sidenav h3 { margin:0 0 0.75rem 0; color:#fff; font-size:0.9rem; text-transform:uppercase; }
+            .nav-item { display:flex; align-items:center; justify-content:space-between; padding:0.4rem 0.5rem; border-radius:4px; color:#aaa; text-decoration:none; font-size:0.85rem; }
+            .nav-item:hover { background:#252525; color:#fff; }
+            .nav-item.active { color:#fff; background:#252525; }
+            .nav-badge { background:#3b82f6; color:white; padding:0.1rem 0.4rem; border-radius:9999px; font-size:0.7rem; font-weight:600; }
+            .nav-item.disabled { opacity:0.3; pointer-events:none; }
+            .main { flex:1; display:flex; flex-direction:column; overflow:hidden; }
+            .topbar { display:flex; align-items:center; justify-content:space-between; padding:0.75rem 1rem; background:#1e1e1e; border-bottom:1px solid #2a2a2a; gap:1rem; flex-shrink:0; }
+            .topbar h1 { margin:0; font-size:1.25rem; color:#fff; }
+            .search-bar { display:flex; gap:0.5rem; align-items:center; }
+            .search-bar input { padding:0.5rem 0.75rem; border:1px solid #333; border-radius:4px; background:#252525; color:#fff; font-size:0.9rem; min-width:220px; }
+            .search-bar input:focus { outline:2px solid #3b82f6; }
+            .btn { padding:0.5rem 0.9rem; background:#3b82f6; color:white; border:none; border-radius:4px; cursor:pointer; font-size:0.85rem; }
+            .btn:hover { background:#2563eb; }
+            .btn.clear { background:#dc2626; }
+            .btn.clear:hover { background:#b91c1c; }
+            .content { flex:1; overflow-y:auto; padding:1rem; display:flex; flex-direction:column; }
+            .tags-bar { display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:0.5rem; min-height:1.5rem; }
+            .tag-pill { background:#3b82f6; color:white; padding:0.2rem 0.6rem; border-radius:9999px; font-size:0.8rem; }
+        </style></head><body data-signals="{&quot;search&quot;: &quot;&quot;, &quot;tags&quot;: []}" style="margin:0;"><div class="layout"><nav class="sidenav"><h3>marimo-css</h3><li><a href="index.html" class="nav-item">← Index</a></li><li><a href="core.html" class="nav-item active"><span>core</span><span class="nav-badge" data-show="$tags.length > 0 || $search.trim().length > 0" data-text="0"></span></a></li></nav><div class="main"><div class="topbar"><h1>core</h1><form class="search-bar" data-on:submit--prevent="$search.trim() ? ($tags = [...$tags, $search.trim()], $search = '') : null"><input type="text" placeholder="Search... (Enter to add tag)" data-bind="search"></input><button class="btn" type="submit">Add Tag</button><button class="btn clear" type="button" data-on:click="$tags = [], $search = ''">Clear</button></form></div><div class="content"><div class="tags-bar" data-show="$tags.length > 0"></div><div style="display:flex; flex-direction:column;"><div id="node-core-read_file" data-signals="{&quot;searchable_node_core_read_file&quot;: &quot;read_file core func  def read_file(path: str = __file__) -> str:     return path(path).read_text()&quot;, &quot;match_node_core_read_file&quot;: 0}" data-effect="$match_node_core_read_file = [...$tags, $search.trim()].filter(t => t.length > 0 &amp;&amp; $searchable_node_core_read_file.toLowerCase().includes(t.toLowerCase())).length" data-show="($tags.length === 0 &amp;&amp; $search.trim().length === 0) || $match_node_core_read_file > 0" data-style:order="($tags.length === 0 &amp;&amp; $search.trim().length === 0) ? 0 : -$match_node_core_read_file"><style>
+            me { margin-bottom:0.75rem; border-radius:8px; overflow:hidden; background:#1e1e1e; position:relative; }
+            me .match-badge { position:absolute; top:1rem; right:1rem; background:#3b82f6; color:white; padding:0.25rem 0.75rem; border-radius:9999px; font-size:0.8rem; font-weight:600; }
+            me .header { display:flex; align-items:center; justify-content:space-between; padding:0.75rem 1rem; }
+            me .header-left { display:flex; align-items:center; gap:0.75rem; }
+            me .header-right { display:flex; align-items:center; gap:0.5rem; }
+            me .tag { padding:0.25rem 0.6rem; border-radius:4px; font-size:0.75rem; font-weight:600; color:white; }
+            me .full-name { font-size:1rem; font-weight:500; }
+            me .mod { color:#666; }
+            me .name { color:#e5e5e5; }
+            me .doc { margin:0; padding:0 1rem 0.5rem; color:#888; font-size:0.85rem; }
+            me .gh-btn { display:flex; align-items:center; gap:0.25rem; background:#333; border:1px solid #444; color:#ccc; padding:0.25rem 0.5rem; border-radius:4px; cursor:pointer; font-size:0.75rem; }
+            me .gh-link { text-decoration:none; }
+            me pre { background:#1a1a1a; border-top:1px solid #2a2a2a; margin:0; padding:0.5rem 0; }
+            me code { font-size:0.8rem; line-height:1.6; color:#ccc; counter-reset:line; }
+            me .code-line { display:block; padding-left:3.5em; white-space:pre-wrap; word-break:break-all; position:relative; }
+            me .code-line::before { content:counter(line); counter-increment:line; position:absolute; left:0; width:2.5em; text-align:right; color:#555; user-select:none; }
+        </style><span class="match-badge" data-show="$tags.length > 0 || $search.trim().length > 0" data-text="$match_node_core_read_file"></span><div class="header"><div class="header-left"><span class="tag" style="background:#10b981;">func</span><span class="full-name"><span class="mod">core.</span><span class="name">read_file</span></span></div><div class="header-right"></div></div><pre><code class="language-python" id="code-node-core-read_file"><span class="code-line">def read_file(path: str = __file__) -&gt; str:</span><span class="code-line">    return Path(path).read_text()</span></code></pre></div><div id="node-core-extract_md_blocks" data-signals="{&quot;searchable_node_core_extract_md_blocks&quot;: &quot;extract_md_blocks core func  def extract_md_blocks(source: str) -> list[str]:     pattern = r mo .md (r    n(.*?)         return re.findall(pattern, source, flags=re.dotall)&quot;, &quot;match_node_core_extract_md_blocks&quot;: 0}" data-effect="$match_node_core_extract_md_blocks = [...$tags, $search.trim()].filter(t => t.length > 0 &amp;&amp; $searchable_node_core_extract_md_blocks.toLowerCase().includes(t.toLowerCase())).length" data-show="($tags.length === 0 &amp;&amp; $search.trim().length === 0) || $match_node_core_extract_md_blocks > 0" data-style:order="($tags.length === 0 &amp;&amp; $search.trim().length === 0) ? 0 : -$match_node_core_extract_md_blocks"><style>
+            me { margin-bottom:0.75rem; border-radius:8px; overflow:hidden; background:#1e1e1e; position:relative; }
+            me .match-badge { position:absolute; top:1rem; right:1rem; background:#3b82f6; color:white; padding:0.25rem 0.75rem; border-radius:9999px; font-size:0.8rem; font-weight:600; }
+            me .header { display:flex; align-items:center; justify-content:space-between; padding:0.75rem 1rem; }
+            me .header-left { display:flex; align-items:center; gap:0.75rem; }
+            me .header-right { display:flex; align-items:center; gap:0.5rem; }
+            me .tag { padding:0.25rem 0.6rem; border-radius:4px; font-size:0.75rem; font-weight:600; color:white; }
+            me .full-name { font-size:1rem; font-weight:500; }
+            me .mod { color:#666; }
+            me .name { color:#e5e5e5; }
+            me .doc { margin:0; padding:0 1rem 0.5rem; color:#888; font-size:0.85rem; }
+            me .gh-btn { display:flex; align-items:center; gap:0.25rem; background:#333; border:1px solid #444; color:#ccc; padding:0.25rem 0.5rem; border-radius:4px; cursor:pointer; font-size:0.75rem; }
+            me .gh-link { text-decoration:none; }
+            me pre { background:#1a1a1a; border-top:1px solid #2a2a2a; margin:0; padding:0.5rem 0; }
+            me code { font-size:0.8rem; line-height:1.6; color:#ccc; counter-reset:line; }
+            me .code-line { display:block; padding-left:3.5em; white-space:pre-wrap; word-break:break-all; position:relative; }
+            me .code-line::before { content:counter(line); counter-increment:line; position:absolute; left:0; width:2.5em; text-align:right; color:#555; user-select:none; }
+        </style><span class="match-badge" data-show="$tags.length > 0 || $search.trim().length > 0" data-text="$match_node_core_extract_md_blocks"></span><div class="header"><div class="header-left"><span class="tag" style="background:#10b981;">func</span><span class="full-name"><span class="mod">core.</span><span class="name">extract_md_blocks</span></span></div><div class="header-right"></div></div><pre><code class="language-python" id="code-node-core-extract_md_blocks"><span class="code-line">def extract_md_blocks(source: str) -&gt; list[str]:</span><span class="code-line">    pattern = r&#x27;mo\.md\(r&quot;&quot;&quot;\n(.*?)&quot;&quot;&quot;&#x27;</span><span class="code-line">    return re.findall(pattern, source, flags=re.DOTALL)</span></code></pre></div><div id="node-core-extract_lang_blocks" data-signals="{&quot;searchable_node_core_extract_lang_blocks&quot;: &quot;extract_lang_blocks core func  def extract_lang_blocks(blocks: list[str], lang: str) -> list[str]:     pattern = rf    {lang} n(.*?)         result = []     for block in blocks:         result.extend(re.findall(pattern, block, flags=re.dotall))     return result&quot;, &quot;match_node_core_extract_lang_blocks&quot;: 0}" data-effect="$match_node_core_extract_lang_blocks = [...$tags, $search.trim()].filter(t => t.length > 0 &amp;&amp; $searchable_node_core_extract_lang_blocks.toLowerCase().includes(t.toLowerCase())).length" data-show="($tags.length === 0 &amp;&amp; $search.trim().length === 0) || $match_node_core_extract_lang_blocks > 0" data-style:order="($tags.length === 0 &amp;&amp; $search.trim().length === 0) ? 0 : -$match_node_core_extract_lang_blocks"><style>
+            me { margin-bottom:0.75rem; border-radius:8px; overflow:hidden; background:#1e1e1e; position:relative; }
+            me .match-badge { position:absolute; top:1rem; right:1rem; background:#3b82f6; color:white; padding:0.25rem 0.75rem; border-radius:9999px; font-size:0.8rem; font-weight:600; }
+            me .header { display:flex; align-items:center; justify-content:space-between; padding:0.75rem 1rem; }
+            me .header-left { display:flex; align-items:center; gap:0.75rem; }
+            me .header-right { display:flex; align-items:center; gap:0.5rem; }
+            me .tag { padding:0.25rem 0.6rem; border-radius:4px; font-size:0.75rem; font-weight:600; color:white; }
+            me .full-name { font-size:1rem; font-weight:500; }
+            me .mod { color:#666; }
+            me .name { color:#e5e5e5; }
+            me .doc { margin:0; padding:0 1rem 0.5rem; color:#888; font-size:0.85rem; }
+            me .gh-btn { display:flex; align-items:center; gap:0.25rem; background:#333; border:1px solid #444; color:#ccc; padding:0.25rem 0.5rem; border-radius:4px; cursor:pointer; font-size:0.75rem; }
+            me .gh-link { text-decoration:none; }
+            me pre { background:#1a1a1a; border-top:1px solid #2a2a2a; margin:0; padding:0.5rem 0; }
+            me code { font-size:0.8rem; line-height:1.6; color:#ccc; counter-reset:line; }
+            me .code-line { display:block; padding-left:3.5em; white-space:pre-wrap; word-break:break-all; position:relative; }
+            me .code-line::before { content:counter(line); counter-increment:line; position:absolute; left:0; width:2.5em; text-align:right; color:#555; user-select:none; }
+        </style><span class="match-badge" data-show="$tags.length > 0 || $search.trim().length > 0" data-text="$match_node_core_extract_lang_blocks"></span><div class="header"><div class="header-left"><span class="tag" style="background:#10b981;">func</span><span class="full-name"><span class="mod">core.</span><span class="name">extract_lang_blocks</span></span></div><div class="header-right"></div></div><pre><code class="language-python" id="code-node-core-extract_lang_blocks"><span class="code-line">def extract_lang_blocks(blocks: list[str], lang: str) -&gt; list[str]:</span><span class="code-line">    pattern = rf&#x27;```{lang}\n(.*?)```&#x27;</span><span class="code-line">    result = []</span><span class="code-line">    for block in blocks:</span><span class="code-line">        result.extend(re.findall(pattern, block, flags=re.DOTALL))</span><span class="code-line">    return result</span></code></pre></div><div id="node-core-write_file" data-signals="{&quot;searchable_node_core_write_file&quot;: &quot;write_file core func  def write_file(blocks: list[str], path: str) -> none:     _path = path(path)     _path.parent.mkdir(parents=true, exist_ok=true)     _path.write_text(  n .join(blocks))&quot;, &quot;match_node_core_write_file&quot;: 0}" data-effect="$match_node_core_write_file = [...$tags, $search.trim()].filter(t => t.length > 0 &amp;&amp; $searchable_node_core_write_file.toLowerCase().includes(t.toLowerCase())).length" data-show="($tags.length === 0 &amp;&amp; $search.trim().length === 0) || $match_node_core_write_file > 0" data-style:order="($tags.length === 0 &amp;&amp; $search.trim().length === 0) ? 0 : -$match_node_core_write_file"><style>
+            me { margin-bottom:0.75rem; border-radius:8px; overflow:hidden; background:#1e1e1e; position:relative; }
+            me .match-badge { position:absolute; top:1rem; right:1rem; background:#3b82f6; color:white; padding:0.25rem 0.75rem; border-radius:9999px; font-size:0.8rem; font-weight:600; }
+            me .header { display:flex; align-items:center; justify-content:space-between; padding:0.75rem 1rem; }
+            me .header-left { display:flex; align-items:center; gap:0.75rem; }
+            me .header-right { display:flex; align-items:center; gap:0.5rem; }
+            me .tag { padding:0.25rem 0.6rem; border-radius:4px; font-size:0.75rem; font-weight:600; color:white; }
+            me .full-name { font-size:1rem; font-weight:500; }
+            me .mod { color:#666; }
+            me .name { color:#e5e5e5; }
+            me .doc { margin:0; padding:0 1rem 0.5rem; color:#888; font-size:0.85rem; }
+            me .gh-btn { display:flex; align-items:center; gap:0.25rem; background:#333; border:1px solid #444; color:#ccc; padding:0.25rem 0.5rem; border-radius:4px; cursor:pointer; font-size:0.75rem; }
+            me .gh-link { text-decoration:none; }
+            me pre { background:#1a1a1a; border-top:1px solid #2a2a2a; margin:0; padding:0.5rem 0; }
+            me code { font-size:0.8rem; line-height:1.6; color:#ccc; counter-reset:line; }
+            me .code-line { display:block; padding-left:3.5em; white-space:pre-wrap; word-break:break-all; position:relative; }
+            me .code-line::before { content:counter(line); counter-increment:line; position:absolute; left:0; width:2.5em; text-align:right; color:#555; user-select:none; }
+        </style><span class="match-badge" data-show="$tags.length > 0 || $search.trim().length > 0" data-text="$match_node_core_write_file"></span><div class="header"><div class="header-left"><span class="tag" style="background:#10b981;">func</span><span class="full-name"><span class="mod">core.</span><span class="name">write_file</span></span></div><div class="header-right"></div></div><pre><code class="language-python" id="code-node-core-write_file"><span class="code-line">def write_file(blocks: list[str], path: str) -&gt; None:</span><span class="code-line">    _path = Path(path)</span><span class="code-line">    _path.parent.mkdir(parents=True, exist_ok=True)</span><span class="code-line">    _path.write_text(&quot;\n&quot;.join(blocks))</span></code></pre></div><div id="node-core-get_css" data-signals="{&quot;searchable_node_core_get_css&quot;: &quot;get_css core func extract and return all css blocks from this notebook. def get_css() -> str:        extract and return all css blocks from this notebook.        return   n .join(extract_lang_blocks(extract_md_blocks(read_file()),  css ))&quot;, &quot;match_node_core_get_css&quot;: 0}" data-effect="$match_node_core_get_css = [...$tags, $search.trim()].filter(t => t.length > 0 &amp;&amp; $searchable_node_core_get_css.toLowerCase().includes(t.toLowerCase())).length" data-show="($tags.length === 0 &amp;&amp; $search.trim().length === 0) || $match_node_core_get_css > 0" data-style:order="($tags.length === 0 &amp;&amp; $search.trim().length === 0) ? 0 : -$match_node_core_get_css"><style>
+            me { margin-bottom:0.75rem; border-radius:8px; overflow:hidden; background:#1e1e1e; position:relative; }
+            me .match-badge { position:absolute; top:1rem; right:1rem; background:#3b82f6; color:white; padding:0.25rem 0.75rem; border-radius:9999px; font-size:0.8rem; font-weight:600; }
+            me .header { display:flex; align-items:center; justify-content:space-between; padding:0.75rem 1rem; }
+            me .header-left { display:flex; align-items:center; gap:0.75rem; }
+            me .header-right { display:flex; align-items:center; gap:0.5rem; }
+            me .tag { padding:0.25rem 0.6rem; border-radius:4px; font-size:0.75rem; font-weight:600; color:white; }
+            me .full-name { font-size:1rem; font-weight:500; }
+            me .mod { color:#666; }
+            me .name { color:#e5e5e5; }
+            me .doc { margin:0; padding:0 1rem 0.5rem; color:#888; font-size:0.85rem; }
+            me .gh-btn { display:flex; align-items:center; gap:0.25rem; background:#333; border:1px solid #444; color:#ccc; padding:0.25rem 0.5rem; border-radius:4px; cursor:pointer; font-size:0.75rem; }
+            me .gh-link { text-decoration:none; }
+            me pre { background:#1a1a1a; border-top:1px solid #2a2a2a; margin:0; padding:0.5rem 0; }
+            me code { font-size:0.8rem; line-height:1.6; color:#ccc; counter-reset:line; }
+            me .code-line { display:block; padding-left:3.5em; white-space:pre-wrap; word-break:break-all; position:relative; }
+            me .code-line::before { content:counter(line); counter-increment:line; position:absolute; left:0; width:2.5em; text-align:right; color:#555; user-select:none; }
+        </style><span class="match-badge" data-show="$tags.length > 0 || $search.trim().length > 0" data-text="$match_node_core_get_css"></span><div class="header"><div class="header-left"><span class="tag" style="background:#10b981;">func</span><span class="full-name"><span class="mod">core.</span><span class="name">get_css</span></span></div><div class="header-right"></div></div><p class="doc">Extract and return all CSS blocks from this notebook.</p><pre><code class="language-python" id="code-node-core-get_css"><span class="code-line">def get_css() -&gt; str:</span><span class="code-line">    &quot;&quot;&quot;Extract and return all CSS blocks from this notebook.&quot;&quot;&quot;</span><span class="code-line">    return &quot;\n&quot;.join(extract_lang_blocks(extract_md_blocks(read_file()), &quot;css&quot;))</span></code></pre></div><div id="node-core-export_css" data-signals="{&quot;searchable_node_core_export_css&quot;: &quot;export_css core func write css to path (creates dirs). returns the path used. def export_css(path: str | none = none) -> str:        write css to path (creates dirs). returns the path used.        _path = path or _default_css_path     write_file([get_css()], _path)     return _path&quot;, &quot;match_node_core_export_css&quot;: 0}" data-effect="$match_node_core_export_css = [...$tags, $search.trim()].filter(t => t.length > 0 &amp;&amp; $searchable_node_core_export_css.toLowerCase().includes(t.toLowerCase())).length" data-show="($tags.length === 0 &amp;&amp; $search.trim().length === 0) || $match_node_core_export_css > 0" data-style:order="($tags.length === 0 &amp;&amp; $search.trim().length === 0) ? 0 : -$match_node_core_export_css"><style>
+            me { margin-bottom:0.75rem; border-radius:8px; overflow:hidden; background:#1e1e1e; position:relative; }
+            me .match-badge { position:absolute; top:1rem; right:1rem; background:#3b82f6; color:white; padding:0.25rem 0.75rem; border-radius:9999px; font-size:0.8rem; font-weight:600; }
+            me .header { display:flex; align-items:center; justify-content:space-between; padding:0.75rem 1rem; }
+            me .header-left { display:flex; align-items:center; gap:0.75rem; }
+            me .header-right { display:flex; align-items:center; gap:0.5rem; }
+            me .tag { padding:0.25rem 0.6rem; border-radius:4px; font-size:0.75rem; font-weight:600; color:white; }
+            me .full-name { font-size:1rem; font-weight:500; }
+            me .mod { color:#666; }
+            me .name { color:#e5e5e5; }
+            me .doc { margin:0; padding:0 1rem 0.5rem; color:#888; font-size:0.85rem; }
+            me .gh-btn { display:flex; align-items:center; gap:0.25rem; background:#333; border:1px solid #444; color:#ccc; padding:0.25rem 0.5rem; border-radius:4px; cursor:pointer; font-size:0.75rem; }
+            me .gh-link { text-decoration:none; }
+            me pre { background:#1a1a1a; border-top:1px solid #2a2a2a; margin:0; padding:0.5rem 0; }
+            me code { font-size:0.8rem; line-height:1.6; color:#ccc; counter-reset:line; }
+            me .code-line { display:block; padding-left:3.5em; white-space:pre-wrap; word-break:break-all; position:relative; }
+            me .code-line::before { content:counter(line); counter-increment:line; position:absolute; left:0; width:2.5em; text-align:right; color:#555; user-select:none; }
+        </style><span class="match-badge" data-show="$tags.length > 0 || $search.trim().length > 0" data-text="$match_node_core_export_css"></span><div class="header"><div class="header-left"><span class="tag" style="background:#10b981;">func</span><span class="full-name"><span class="mod">core.</span><span class="name">export_css</span></span></div><div class="header-right"></div></div><p class="doc">Write CSS to path (creates dirs). Returns the path used.</p><pre><code class="language-python" id="code-node-core-export_css"><span class="code-line">def export_css(path: str | None = None) -&gt; str:</span><span class="code-line">    &quot;&quot;&quot;Write CSS to path (creates dirs). Returns the path used.&quot;&quot;&quot;</span><span class="code-line">    _path = path or _DEFAULT_CSS_PATH</span><span class="code-line">    write_file([get_css()], _path)</span><span class="code-line">    return _path</span></code></pre></div><div id="node-core-download_css" data-signals="{&quot;searchable_node_core_download_css&quot;: &quot;download_css core func save css to the user s downloads folder. returns the path used. def download_css(filename: str | none = none) -> str:        save css to the user s downloads folder. returns the path used.        _filename = filename or path(_default_css_path).name     _path = path.home()    downloads    _filename     write_file([get_css()], str(_path))     return str(_path)&quot;, &quot;match_node_core_download_css&quot;: 0}" data-effect="$match_node_core_download_css = [...$tags, $search.trim()].filter(t => t.length > 0 &amp;&amp; $searchable_node_core_download_css.toLowerCase().includes(t.toLowerCase())).length" data-show="($tags.length === 0 &amp;&amp; $search.trim().length === 0) || $match_node_core_download_css > 0" data-style:order="($tags.length === 0 &amp;&amp; $search.trim().length === 0) ? 0 : -$match_node_core_download_css"><style>
+            me { margin-bottom:0.75rem; border-radius:8px; overflow:hidden; background:#1e1e1e; position:relative; }
+            me .match-badge { position:absolute; top:1rem; right:1rem; background:#3b82f6; color:white; padding:0.25rem 0.75rem; border-radius:9999px; font-size:0.8rem; font-weight:600; }
+            me .header { display:flex; align-items:center; justify-content:space-between; padding:0.75rem 1rem; }
+            me .header-left { display:flex; align-items:center; gap:0.75rem; }
+            me .header-right { display:flex; align-items:center; gap:0.5rem; }
+            me .tag { padding:0.25rem 0.6rem; border-radius:4px; font-size:0.75rem; font-weight:600; color:white; }
+            me .full-name { font-size:1rem; font-weight:500; }
+            me .mod { color:#666; }
+            me .name { color:#e5e5e5; }
+            me .doc { margin:0; padding:0 1rem 0.5rem; color:#888; font-size:0.85rem; }
+            me .gh-btn { display:flex; align-items:center; gap:0.25rem; background:#333; border:1px solid #444; color:#ccc; padding:0.25rem 0.5rem; border-radius:4px; cursor:pointer; font-size:0.75rem; }
+            me .gh-link { text-decoration:none; }
+            me pre { background:#1a1a1a; border-top:1px solid #2a2a2a; margin:0; padding:0.5rem 0; }
+            me code { font-size:0.8rem; line-height:1.6; color:#ccc; counter-reset:line; }
+            me .code-line { display:block; padding-left:3.5em; white-space:pre-wrap; word-break:break-all; position:relative; }
+            me .code-line::before { content:counter(line); counter-increment:line; position:absolute; left:0; width:2.5em; text-align:right; color:#555; user-select:none; }
+        </style><span class="match-badge" data-show="$tags.length > 0 || $search.trim().length > 0" data-text="$match_node_core_download_css"></span><div class="header"><div class="header-left"><span class="tag" style="background:#10b981;">func</span><span class="full-name"><span class="mod">core.</span><span class="name">download_css</span></span></div><div class="header-right"></div></div><p class="doc">Save CSS to the user&#x27;s Downloads folder. Returns the path used.</p><pre><code class="language-python" id="code-node-core-download_css"><span class="code-line">def download_css(filename: str | None = None) -&gt; str:</span><span class="code-line">    &quot;&quot;&quot;Save CSS to the user&#x27;s Downloads folder. Returns the path used.&quot;&quot;&quot;</span><span class="code-line">    _filename = filename or Path(_DEFAULT_CSS_PATH).name</span><span class="code-line">    _path = Path.home() / &quot;Downloads&quot; / _filename</span><span class="code-line">    write_file([get_css()], str(_path))</span><span class="code-line">    return str(_path)</span></code></pre></div></div></div></div></div></body></html>

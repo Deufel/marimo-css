@@ -1,0 +1,29 @@
+@PROPERTIES
+
+LAYERS
+    1. theme                        ✗
+    2. components                   ✗
+
+VARIABLES
+  declared: 520  referenced: 612
+  unreferenced: --amber-5, --cm-comment, --crimson-1, --crimson-10, --crimson-12, --crimson-2, --crimson-4, --crimson-5, --crimson-7, --crimson-8, --crimson-9, --cyan-1, --cyan-10, --cyan-12, --cyan-4, --cyan-7, --gray-12, --green-1, --green-10, --green-12, --green-2, --green-5, --green-7, --green-8, --lime-1, --lime-10, --lime-12, --lime-4, --lime-5, --lime-7, --lime-8, --lime-9, --markdown-max-width, --orange-1, --orange-10, --orange-12, --orange-2, --orange-5, --orange-7, --orange-8, --purple-1, --purple-10, --purple-2, --purple-7, --purple-8, --sage-10, --sage-11, --sage-12, --sage-2, --sage-5, --sage-7, --sage-8, --sage-9, --sky-10, --sky-4, --slot, --success, --success-foreground, --tw-drop-shadow-alpha, --tw-drop-shadow-color, --tw-drop-shadow-size, --tw-font-weight, --tw-inset-ring-color, --tw-inset-shadow-alpha, --tw-inset-shadow-color, --tw-opacity, --tw-prose-body, --tw-prose-bullets, --tw-prose-counters, --tw-prose-pre-code, --tw-scale-z, --tw-tracking, --tw-translate-z, --yellow-1
+
+ISSUES
+  [WRN] :0 layer 'theme' declared but unused
+  [WRN] :0 layer 'components' declared but unused
+  [WRN] docs/wasm/assets/JsonOutput-B7vuddcd.css:2 raw hex color — use token?
+  [ERR] docs/wasm/assets/cell-editor-Iey559K_.css:0 layer 'properties' used but not declared
+  [WRN] docs/wasm/assets/cell-editor-Iey559K_.css:2 raw hex color — use token?
+  [WRN] docs/wasm/assets/dependency-graph-panel-DZccg5W0.css:1 raw hex color — use token?
+  [ERR] docs/wasm/assets/edit-page-Dstp9NQ5.css:1 transition without --cfg-motion
+  [WRN] docs/wasm/assets/glide-data-editor-BrZJn3-g.css:1 raw hex color — use token?
+  [ERR] docs/wasm/assets/glide-data-editor-BrZJn3-g.css:1 transition without --cfg-motion
+  [ERR] docs/wasm/assets/index-GjXovVsl.css:0 layer 'base' used but not declared
+  [ERR] docs/wasm/assets/index-GjXovVsl.css:0 layer 'utilities' used but not declared
+  [WRN] docs/wasm/assets/index-GjXovVsl.css:2 raw hex color — use token?
+  [ERR] docs/wasm/assets/index-GjXovVsl.css:2 transition without --cfg-motion
+  [WRN] docs/wasm/assets/layout-BjXzDXoG.css:1 raw hex color — use token?
+  [ERR] docs/wasm/assets/layout-BjXzDXoG.css:1 transition without --cfg-motion
+  [WRN] docs/wasm/assets/slides-component-BZCkobYT.css:1 raw hex color — use token?
+  [ERR] docs/wasm/assets/slides-component-BZCkobYT.css:1 transition without --cfg-motion
+  [WRN] docs/wasm/assets/terminal-ByuMlBP_.css:1 raw hex color — use token?
