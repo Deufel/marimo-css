@@ -1,5 +1,5 @@
 """Write CSS in a marimo notebook"""
-__version__ = '0.1.3'
+__version__ = '0.1.4'
 __author__ = 'Deufel'
 from .types import Issue, Report
 from .parse import line_at, brace_depth, find_properties, find_layer_order, find_layer_blocks, find_var_decls, find_var_refs
@@ -7,7 +7,7 @@ from .rules import check_nested_properties, check_hex_colors, check_motion, chec
 from .extract import read_file, extract_md_blocks, extract_lang_blocks, get_css, find_notebooks, export_one, export_all
 from .lint import should_skip, find_root, lint_file, lint_project
 from .output import print_summary, write_log
-from .cli import lint_notebook, cmd_lint
+from .cli import lint_notebook, cmd_extract, cmd_lint, cmd_check, main
 __all__ = [
     "Issue",
     "Report",
@@ -17,6 +17,8 @@ __all__ = [
     "check_nested_properties",
     "check_undeclared_layers",
     "check_unused_layers",
+    "cmd_check",
+    "cmd_extract",
     "cmd_lint",
     "export_all",
     "export_one",
@@ -34,6 +36,7 @@ __all__ = [
     "lint_file",
     "lint_notebook",
     "lint_project",
+    "main",
     "print_summary",
     "read_file",
     "should_skip",

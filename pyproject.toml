@@ -1,6 +1,6 @@
 [project]
 name = "marimo-css"
-version = "0.1.3"
+version = "0.1.4"
 description = "Write CSS in a marimo notebook"
 readme = "README.md"
 authors = [

@@ -8,6 +8,6 @@
 - [extract](/extract): read_file, extract_md_blocks, extract_lang_blocks, get_css, find_notebooks, export_one, export_all
 - [lint](/lint): should_skip, find_root, lint_file, lint_project
 - [output](/output): print_summary, write_log
-- [cli](/cli): lint_notebook, cmd_lint
+- [cli](/cli): lint_notebook, cmd_extract, cmd_lint, cmd_check, main
 
 - [llms-full.txt](/llms-full.txt): Complete source code
