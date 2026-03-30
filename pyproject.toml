@@ -1,6 +1,6 @@
 [project]
 name = "marimo-css"
-version = "0.1.1"
+version = "0.1.2"
 description = "Write CSS in a marimo notebook"
 readme = "README.md"
 authors = [
@@ -8,8 +8,10 @@ authors = [
 ]
 requires-python = ">=3.14"
 dependencies = [
+    "anthropic>=0.86.0",
     "marimo>=0.21.1",
     "marimo-dev>=0.3.8",
+    "pydantic-ai-slim>=1.73.0",
 ]
 
 [build-system]
@@ -18,4 +20,4 @@ build-backend = "uv_build"
 
 
 [project.scripts]
-css-lint = "marimo_css.cli:main"
+css = "marimo_css.cli:main"

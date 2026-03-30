@@ -9,6 +9,13 @@
 Write CSS in Marimo
 
 ```bash
-md lint                  # scan project for .css files
-md lint my_notebook.py   # extract from marimo notebook + lint
+css extract                        # ./notebooks/*.py → ./notebooks/<name>.css
+css extract ./src                  # custom input dir
+css extract ./src ./dist           # custom input + output dir
+
+css lint                           # lint all .css in project
+css lint style.css                 # lint one file
+
+css check                          # extract ./notebooks/*.py → temp → lint → cleanup
+css check ./src                    # custom notebook dir
 ```

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html><head><script type="module" src="https://cdn.jsdelivr.net/gh/starfederation/datastar@1.0.0-RC.8/bundles/datastar.js"></script><script src="https://cdn.jsdelivr.net/gh/gnat/css-scope-inline@main/script.js"></script><script src="js/highlight.js" type="module"></script><title>types - marimo-css</title><style>
+            * { scrollbar-gutter:stable; box-sizing:border-box; }
+            body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; margin:0; background:#121212; }
+            code { font-family:'SF Mono',Consolas,monospace; }
+            .layout { display:flex; height:100vh; }
+            .sidenav { width:220px; background:#1a1a1a; padding:1rem; overflow-y:auto; display:flex; flex-direction:column; gap:0.25rem; flex-shrink:0; }
+            .sidenav h3 { margin:0 0 0.75rem 0; color:#fff; font-size:0.9rem; text-transform:uppercase; }
+            .nav-item { display:flex; align-items:center; justify-content:space-between; padding:0.4rem 0.5rem; border-radius:4px; color:#aaa; text-decoration:none; font-size:0.85rem; }
+            .nav-item:hover { background:#252525; color:#fff; }
+            .nav-item.active { color:#fff; background:#252525; }
+            .nav-badge { background:#3b82f6; color:white; padding:0.1rem 0.4rem; border-radius:9999px; font-size:0.7rem; font-weight:600; }
+            .nav-item.disabled { opacity:0.3; pointer-events:none; }
+            .main { flex:1; display:flex; flex-direction:column; overflow:hidden; }
+            .topbar { display:flex; align-items:center; justify-content:space-between; padding:0.75rem 1rem; background:#1e1e1e; border-bottom:1px solid #2a2a2a; gap:1rem; flex-shrink:0; }
+            .topbar h1 { margin:0; font-size:1.25rem; color:#fff; }
+            .search-bar { display:flex; gap:0.5rem; align-items:center; }
+            .search-bar input { padding:0.5rem 0.75rem; border:1px solid #333; border-radius:4px; background:#252525; color:#fff; font-size:0.9rem; min-width:220px; }
+            .search-bar input:focus { outline:2px solid #3b82f6; }
+            .btn { padding:0.5rem 0.9rem; background:#3b82f6; color:white; border:none; border-radius:4px; cursor:pointer; font-size:0.85rem; }
+            .btn:hover { background:#2563eb; }
+            .btn.clear { background:#dc2626; }
+            .btn.clear:hover { background:#b91c1c; }
+            .content { flex:1; overflow-y:auto; padding:1rem; display:flex; flex-direction:column; }
+            .tags-bar { display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:0.5rem; min-height:1.5rem; }
+            .tag-pill { background:#3b82f6; color:white; padding:0.2rem 0.6rem; border-radius:9999px; font-size:0.8rem; }
+        </style></head><body data-signals="{&quot;search&quot;: &quot;&quot;, &quot;tags&quot;: []}" style="margin:0;"><div class="layout"><nav class="sidenav"><h3>marimo-css</h3><li><a href="index.html" class="nav-item">← Index</a></li><li><a href="types.html" class="nav-item active"><span>types</span><span class="nav-badge" data-show="$tags.length > 0 || $search.trim().length > 0" data-text="0"></span></a></li><li><a href="parse.html" class="nav-item "><span>parse</span><span class="nav-badge" data-show="$tags.length > 0 || $search.trim().length > 0" data-text="0"></span></a></li><li><a href="rules.html" class="nav-item "><span>rules</span><span class="nav-badge" data-show="$tags.length > 0 || $search.trim().length > 0" data-text="0"></span></a></li><li><a href="extract.html" class="nav-item "><span>extract</span><span class="nav-badge" data-show="$tags.length > 0 || $search.trim().length > 0" data-text="0"></span></a></li><li><a href="lint.html" class="nav-item "><span>lint</span><span class="nav-badge" data-show="$tags.length > 0 || $search.trim().length > 0" data-text="0"></span></a></li><li><a href="output.html" class="nav-item "><span>output</span><span class="nav-badge" data-show="$tags.length > 0 || $search.trim().length > 0" data-text="0"></span></a></li><li><a href="cli.html" class="nav-item "><span>cli</span><span class="nav-badge" data-show="$tags.length > 0 || $search.trim().length > 0" data-text="0"></span></a></li></nav><div class="main"><div class="topbar"><h1>types</h1><form class="search-bar" data-on:submit--prevent="$search.trim() ? ($tags = [...$tags, $search.trim()], $search = '') : null"><input type="text" placeholder="Search... (Enter to add tag)" data-bind="search"></input><button class="btn" type="submit">Add Tag</button><button class="btn clear" type="button" data-on:click="$tags = [], $search = ''">Clear</button></form></div><div class="content"><div class="tags-bar" data-show="$tags.length > 0"></div><div style="display:flex; flex-direction:column;"><div id="node-types-Issue" data-signals="{&quot;searchable_node_types_Issue&quot;: &quot;issue types class  @dataclass class issue:     file: str     line: int     level: str  #  warn  |  error      msg: str&quot;, &quot;match_node_types_Issue&quot;: 0}" data-effect="$match_node_types_Issue = [...$tags, $search.trim()].filter(t => t.length > 0 &amp;&amp; $searchable_node_types_Issue.toLowerCase().includes(t.toLowerCase())).length" data-show="($tags.length === 0 &amp;&amp; $search.trim().length === 0) || $match_node_types_Issue > 0" data-style:order="($tags.length === 0 &amp;&amp; $search.trim().length === 0) ? 0 : -$match_node_types_Issue"><style>
+            me { margin-bottom:0.75rem; border-radius:8px; overflow:hidden; background:#1e1e1e; position:relative; }
+            me .match-badge { position:absolute; top:1rem; right:1rem; background:#3b82f6; color:white; padding:0.25rem 0.75rem; border-radius:9999px; font-size:0.8rem; font-weight:600; }
+            me .header { display:flex; align-items:center; justify-content:space-between; padding:0.75rem 1rem; }
+            me .header-left { display:flex; align-items:center; gap:0.75rem; }
+            me .header-right { display:flex; align-items:center; gap:0.5rem; }
+            me .tag { padding:0.25rem 0.6rem; border-radius:4px; font-size:0.75rem; font-weight:600; color:white; }
+            me .full-name { font-size:1rem; font-weight:500; }
+            me .mod { color:#666; }
+            me .name { color:#e5e5e5; }
+            me .doc { margin:0; padding:0 1rem 0.5rem; color:#888; font-size:0.85rem; }
+            me .gh-btn { display:flex; align-items:center; gap:0.25rem; background:#333; border:1px solid #444; color:#ccc; padding:0.25rem 0.5rem; border-radius:4px; cursor:pointer; font-size:0.75rem; }
+            me .gh-link { text-decoration:none; }
+            me pre { background:#1a1a1a; border-top:1px solid #2a2a2a; margin:0; padding:0.5rem 0; }
+            me code { font-size:0.8rem; line-height:1.6; color:#ccc; counter-reset:line; }
+            me .code-line { display:block; padding-left:3.5em; white-space:pre-wrap; word-break:break-all; position:relative; }
+            me .code-line::before { content:counter(line); counter-increment:line; position:absolute; left:0; width:2.5em; text-align:right; color:#555; user-select:none; }
+        </style><span class="match-badge" data-show="$tags.length > 0 || $search.trim().length > 0" data-text="$match_node_types_Issue"></span><div class="header"><div class="header-left"><span class="tag" style="background:#8b5cf6;">class</span><span class="full-name"><span class="mod">types.</span><span class="name">Issue</span></span></div><div class="header-right"></div></div><pre><code class="language-python" id="code-node-types-Issue"><span class="code-line">@dataclass</span><span class="code-line">class Issue:</span><span class="code-line">    file: str</span><span class="code-line">    line: int</span><span class="code-line">    level: str  # &quot;warn&quot; | &quot;error&quot;</span><span class="code-line">    msg: str</span></code></pre></div><div id="node-types-Report" data-signals="{&quot;searchable_node_types_Report&quot;: &quot;report types class  @dataclass class report:     properties: list = field(default_factory=list)     layers_declared: list = field(default_factory=list)     layers_used: dict = field(default_factory=lambda: defaultdict(list))     var_decls: set = field(default_factory=set)     var_refs: set = field(default_factory=set)     issues: list = field(default_factory=list)     total_lines: int = 0     total_bytes: int = 0      @property     def errors(self) -> int:         return sum(1 for i in self.issues if i.level ==  error )      @property     def warns(self) -> int:         return sum(1 for i in self.issues if i.level ==  warn )&quot;, &quot;match_node_types_Report&quot;: 0}" data-effect="$match_node_types_Report = [...$tags, $search.trim()].filter(t => t.length > 0 &amp;&amp; $searchable_node_types_Report.toLowerCase().includes(t.toLowerCase())).length" data-show="($tags.length === 0 &amp;&amp; $search.trim().length === 0) || $match_node_types_Report > 0" data-style:order="($tags.length === 0 &amp;&amp; $search.trim().length === 0) ? 0 : -$match_node_types_Report"><style>
+            me { margin-bottom:0.75rem; border-radius:8px; overflow:hidden; background:#1e1e1e; position:relative; }
+            me .match-badge { position:absolute; top:1rem; right:1rem; background:#3b82f6; color:white; padding:0.25rem 0.75rem; border-radius:9999px; font-size:0.8rem; font-weight:600; }
+            me .header { display:flex; align-items:center; justify-content:space-between; padding:0.75rem 1rem; }
+            me .header-left { display:flex; align-items:center; gap:0.75rem; }
+            me .header-right { display:flex; align-items:center; gap:0.5rem; }
+            me .tag { padding:0.25rem 0.6rem; border-radius:4px; font-size:0.75rem; font-weight:600; color:white; }
+            me .full-name { font-size:1rem; font-weight:500; }
+            me .mod { color:#666; }
+            me .name { color:#e5e5e5; }
+            me .doc { margin:0; padding:0 1rem 0.5rem; color:#888; font-size:0.85rem; }
+            me .gh-btn { display:flex; align-items:center; gap:0.25rem; background:#333; border:1px solid #444; color:#ccc; padding:0.25rem 0.5rem; border-radius:4px; cursor:pointer; font-size:0.75rem; }
+            me .gh-link { text-decoration:none; }
+            me pre { background:#1a1a1a; border-top:1px solid #2a2a2a; margin:0; padding:0.5rem 0; }
+            me code { font-size:0.8rem; line-height:1.6; color:#ccc; counter-reset:line; }
+            me .code-line { display:block; padding-left:3.5em; white-space:pre-wrap; word-break:break-all; position:relative; }
+            me .code-line::before { content:counter(line); counter-increment:line; position:absolute; left:0; width:2.5em; text-align:right; color:#555; user-select:none; }
+        </style><span class="match-badge" data-show="$tags.length > 0 || $search.trim().length > 0" data-text="$match_node_types_Report"></span><div class="header"><div class="header-left"><span class="tag" style="background:#8b5cf6;">class</span><span class="full-name"><span class="mod">types.</span><span class="name">Report</span></span></div><div class="header-right"></div></div><pre><code class="language-python" id="code-node-types-Report"><span class="code-line">@dataclass</span><span class="code-line">class Report:</span><span class="code-line">    properties: list = field(default_factory=list)</span><span class="code-line">    layers_declared: list = field(default_factory=list)</span><span class="code-line">    layers_used: dict = field(default_factory=lambda: defaultdict(list))</span><span class="code-line">    var_decls: set = field(default_factory=set)</span><span class="code-line">    var_refs: set = field(default_factory=set)</span><span class="code-line">    issues: list = field(default_factory=list)</span><span class="code-line">    total_lines: int = 0</span><span class="code-line">    total_bytes: int = 0</span><span class="code-line"></span><span class="code-line">    @property</span><span class="code-line">    def errors(self) -&gt; int:</span><span class="code-line">        return sum(1 for i in self.issues if i.level == &quot;error&quot;)</span><span class="code-line"></span><span class="code-line">    @property</span><span class="code-line">    def warns(self) -&gt; int:</span><span class="code-line">        return sum(1 for i in self.issues if i.level == &quot;warn&quot;)</span></code></pre></div></div></div></div></div></body></html>

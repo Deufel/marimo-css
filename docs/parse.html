@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html><head><script type="module" src="https://cdn.jsdelivr.net/gh/starfederation/datastar@1.0.0-RC.8/bundles/datastar.js"></script><script src="https://cdn.jsdelivr.net/gh/gnat/css-scope-inline@main/script.js"></script><script src="js/highlight.js" type="module"></script><title>parse - marimo-css</title><style>
+            * { scrollbar-gutter:stable; box-sizing:border-box; }
+            body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; margin:0; background:#121212; }
+            code { font-family:'SF Mono',Consolas,monospace; }
+            .layout { display:flex; height:100vh; }
+            .sidenav { width:220px; background:#1a1a1a; padding:1rem; overflow-y:auto; display:flex; flex-direction:column; gap:0.25rem; flex-shrink:0; }
+            .sidenav h3 { margin:0 0 0.75rem 0; color:#fff; font-size:0.9rem; text-transform:uppercase; }
+            .nav-item { display:flex; align-items:center; justify-content:space-between; padding:0.4rem 0.5rem; border-radius:4px; color:#aaa; text-decoration:none; font-size:0.85rem; }
+            .nav-item:hover { background:#252525; color:#fff; }
+            .nav-item.active { color:#fff; background:#252525; }
+            .nav-badge { background:#3b82f6; color:white; padding:0.1rem 0.4rem; border-radius:9999px; font-size:0.7rem; font-weight:600; }
+            .nav-item.disabled { opacity:0.3; pointer-events:none; }
+            .main { flex:1; display:flex; flex-direction:column; overflow:hidden; }
+            .topbar { display:flex; align-items:center; justify-content:space-between; padding:0.75rem 1rem; background:#1e1e1e; border-bottom:1px solid #2a2a2a; gap:1rem; flex-shrink:0; }
+            .topbar h1 { margin:0; font-size:1.25rem; color:#fff; }
+            .search-bar { display:flex; gap:0.5rem; align-items:center; }
+            .search-bar input { padding:0.5rem 0.75rem; border:1px solid #333; border-radius:4px; background:#252525; color:#fff; font-size:0.9rem; min-width:220px; }
+            .search-bar input:focus { outline:2px solid #3b82f6; }
+            .btn { padding:0.5rem 0.9rem; background:#3b82f6; color:white; border:none; border-radius:4px; cursor:pointer; font-size:0.85rem; }
+            .btn:hover { background:#2563eb; }
+            .btn.clear { background:#dc2626; }
+            .btn.clear:hover { background:#b91c1c; }
+            .content { flex:1; overflow-y:auto; padding:1rem; display:flex; flex-direction:column; }
+            .tags-bar { display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:0.5rem; min-height:1.5rem; }
+            .tag-pill { background:#3b82f6; color:white; padding:0.2rem 0.6rem; border-radius:9999px; font-size:0.8rem; }
+        </style></head><body data-signals="{&quot;search&quot;: &quot;&quot;, &quot;tags&quot;: []}" style="margin:0;"><div class="layout"><nav class="sidenav"><h3>marimo-css</h3><li><a href="index.html" class="nav-item">← Index</a></li><li><a href="types.html" class="nav-item "><span>types</span><span class="nav-badge" data-show="$tags.length > 0 || $search.trim().length > 0" data-text="0"></span></a></li><li><a href="parse.html" class="nav-item active"><span>parse</span><span class="nav-badge" data-show="$tags.length > 0 || $search.trim().length > 0" data-text="0"></span></a></li><li><a href="rules.html" class="nav-item "><span>rules</span><span class="nav-badge" data-show="$tags.length > 0 || $search.trim().length > 0" data-text="0"></span></a></li><li><a href="extract.html" class="nav-item "><span>extract</span><span class="nav-badge" data-show="$tags.length > 0 || $search.trim().length > 0" data-text="0"></span></a></li><li><a href="lint.html" class="nav-item "><span>lint</span><span class="nav-badge" data-show="$tags.length > 0 || $search.trim().length > 0" data-text="0"></span></a></li><li><a href="output.html" class="nav-item "><span>output</span><span class="nav-badge" data-show="$tags.length > 0 || $search.trim().length > 0" data-text="0"></span></a></li><li><a href="cli.html" class="nav-item "><span>cli</span><span class="nav-badge" data-show="$tags.length > 0 || $search.trim().length > 0" data-text="0"></span></a></li></nav><div class="main"><div class="topbar"><h1>parse</h1><form class="search-bar" data-on:submit--prevent="$search.trim() ? ($tags = [...$tags, $search.trim()], $search = '') : null"><input type="text" placeholder="Search... (Enter to add tag)" data-bind="search"></input><button class="btn" type="submit">Add Tag</button><button class="btn clear" type="button" data-on:click="$tags = [], $search = ''">Clear</button></form></div><div class="content"><div class="tags-bar" data-show="$tags.length > 0"></div><div style="display:flex; flex-direction:column;"><div id="node-parse-line_at" data-signals="{&quot;searchable_node_parse_line_at&quot;: &quot;line_at parse func  def line_at(text: str, pos: int) -> int:     return text[:pos].count(  n ) + 1&quot;, &quot;match_node_parse_line_at&quot;: 0}" data-effect="$match_node_parse_line_at = [...$tags, $search.trim()].filter(t => t.length > 0 &amp;&amp; $searchable_node_parse_line_at.toLowerCase().includes(t.toLowerCase())).length" data-show="($tags.length === 0 &amp;&amp; $search.trim().length === 0) || $match_node_parse_line_at > 0" data-style:order="($tags.length === 0 &amp;&amp; $search.trim().length === 0) ? 0 : -$match_node_parse_line_at"><style>
+            me { margin-bottom:0.75rem; border-radius:8px; overflow:hidden; background:#1e1e1e; position:relative; }
+            me .match-badge { position:absolute; top:1rem; right:1rem; background:#3b82f6; color:white; padding:0.25rem 0.75rem; border-radius:9999px; font-size:0.8rem; font-weight:600; }
+            me .header { display:flex; align-items:center; justify-content:space-between; padding:0.75rem 1rem; }
+            me .header-left { display:flex; align-items:center; gap:0.75rem; }
+            me .header-right { display:flex; align-items:center; gap:0.5rem; }
+            me .tag { padding:0.25rem 0.6rem; border-radius:4px; font-size:0.75rem; font-weight:600; color:white; }
+            me .full-name { font-size:1rem; font-weight:500; }
+            me .mod { color:#666; }
+            me .name { color:#e5e5e5; }
+            me .doc { margin:0; padding:0 1rem 0.5rem; color:#888; font-size:0.85rem; }
+            me .gh-btn { display:flex; align-items:center; gap:0.25rem; background:#333; border:1px solid #444; color:#ccc; padding:0.25rem 0.5rem; border-radius:4px; cursor:pointer; font-size:0.75rem; }
+            me .gh-link { text-decoration:none; }
+            me pre { background:#1a1a1a; border-top:1px solid #2a2a2a; margin:0; padding:0.5rem 0; }
+            me code { font-size:0.8rem; line-height:1.6; color:#ccc; counter-reset:line; }
+            me .code-line { display:block; padding-left:3.5em; white-space:pre-wrap; word-break:break-all; position:relative; }
+            me .code-line::before { content:counter(line); counter-increment:line; position:absolute; left:0; width:2.5em; text-align:right; color:#555; user-select:none; }
+        </style><span class="match-badge" data-show="$tags.length > 0 || $search.trim().length > 0" data-text="$match_node_parse_line_at"></span><div class="header"><div class="header-left"><span class="tag" style="background:#10b981;">func</span><span class="full-name"><span class="mod">parse.</span><span class="name">line_at</span></span></div><div class="header-right"></div></div><pre><code class="language-python" id="code-node-parse-line_at"><span class="code-line">def line_at(text: str, pos: int) -&gt; int:</span><span class="code-line">    return text[:pos].count(&#x27;\n&#x27;) + 1</span></code></pre></div><div id="node-parse-brace_depth" data-signals="{&quot;searchable_node_parse_brace_depth&quot;: &quot;brace_depth parse func  def brace_depth(text: str, pos: int) -> int:     return text[:pos].count( { ) - text[:pos].count( } )&quot;, &quot;match_node_parse_brace_depth&quot;: 0}" data-effect="$match_node_parse_brace_depth = [...$tags, $search.trim()].filter(t => t.length > 0 &amp;&amp; $searchable_node_parse_brace_depth.toLowerCase().includes(t.toLowerCase())).length" data-show="($tags.length === 0 &amp;&amp; $search.trim().length === 0) || $match_node_parse_brace_depth > 0" data-style:order="($tags.length === 0 &amp;&amp; $search.trim().length === 0) ? 0 : -$match_node_parse_brace_depth"><style>
+            me { margin-bottom:0.75rem; border-radius:8px; overflow:hidden; background:#1e1e1e; position:relative; }
+            me .match-badge { position:absolute; top:1rem; right:1rem; background:#3b82f6; color:white; padding:0.25rem 0.75rem; border-radius:9999px; font-size:0.8rem; font-weight:600; }
+            me .header { display:flex; align-items:center; justify-content:space-between; padding:0.75rem 1rem; }
+            me .header-left { display:flex; align-items:center; gap:0.75rem; }
+            me .header-right { display:flex; align-items:center; gap:0.5rem; }
+            me .tag { padding:0.25rem 0.6rem; border-radius:4px; font-size:0.75rem; font-weight:600; color:white; }
+            me .full-name { font-size:1rem; font-weight:500; }
+            me .mod { color:#666; }
+            me .name { color:#e5e5e5; }
+            me .doc { margin:0; padding:0 1rem 0.5rem; color:#888; font-size:0.85rem; }
+            me .gh-btn { display:flex; align-items:center; gap:0.25rem; background:#333; border:1px solid #444; color:#ccc; padding:0.25rem 0.5rem; border-radius:4px; cursor:pointer; font-size:0.75rem; }
+            me .gh-link { text-decoration:none; }
+            me pre { background:#1a1a1a; border-top:1px solid #2a2a2a; margin:0; padding:0.5rem 0; }
+            me code { font-size:0.8rem; line-height:1.6; color:#ccc; counter-reset:line; }
+            me .code-line { display:block; padding-left:3.5em; white-space:pre-wrap; word-break:break-all; position:relative; }
+            me .code-line::before { content:counter(line); counter-increment:line; position:absolute; left:0; width:2.5em; text-align:right; color:#555; user-select:none; }
+        </style><span class="match-badge" data-show="$tags.length > 0 || $search.trim().length > 0" data-text="$match_node_parse_brace_depth"></span><div class="header"><div class="header-left"><span class="tag" style="background:#10b981;">func</span><span class="full-name"><span class="mod">parse.</span><span class="name">brace_depth</span></span></div><div class="header-right"></div></div><pre><code class="language-python" id="code-node-parse-brace_depth"><span class="code-line">def brace_depth(text: str, pos: int) -&gt; int:</span><span class="code-line">    return text[:pos].count(&#x27;{&#x27;) - text[:pos].count(&#x27;}&#x27;)</span></code></pre></div><div id="node-parse-find_properties" data-signals="{&quot;searchable_node_parse_find_properties&quot;: &quot;find_properties parse func  def find_properties(text: str) -> list[dict]:     return [         dict(name=m.group(1), syntax=m.group(2),              inherits=m.group(3) ==  true , initial=m.group(4).strip(),              line=line_at(text, m.start()), pos=m.start())         for m in re_property.finditer(text)     ]&quot;, &quot;match_node_parse_find_properties&quot;: 0}" data-effect="$match_node_parse_find_properties = [...$tags, $search.trim()].filter(t => t.length > 0 &amp;&amp; $searchable_node_parse_find_properties.toLowerCase().includes(t.toLowerCase())).length" data-show="($tags.length === 0 &amp;&amp; $search.trim().length === 0) || $match_node_parse_find_properties > 0" data-style:order="($tags.length === 0 &amp;&amp; $search.trim().length === 0) ? 0 : -$match_node_parse_find_properties"><style>
+            me { margin-bottom:0.75rem; border-radius:8px; overflow:hidden; background:#1e1e1e; position:relative; }
+            me .match-badge { position:absolute; top:1rem; right:1rem; background:#3b82f6; color:white; padding:0.25rem 0.75rem; border-radius:9999px; font-size:0.8rem; font-weight:600; }
+            me .header { display:flex; align-items:center; justify-content:space-between; padding:0.75rem 1rem; }
+            me .header-left { display:flex; align-items:center; gap:0.75rem; }
+            me .header-right { display:flex; align-items:center; gap:0.5rem; }
+            me .tag { padding:0.25rem 0.6rem; border-radius:4px; font-size:0.75rem; font-weight:600; color:white; }
+            me .full-name { font-size:1rem; font-weight:500; }
+            me .mod { color:#666; }
+            me .name { color:#e5e5e5; }
+            me .doc { margin:0; padding:0 1rem 0.5rem; color:#888; font-size:0.85rem; }
+            me .gh-btn { display:flex; align-items:center; gap:0.25rem; background:#333; border:1px solid #444; color:#ccc; padding:0.25rem 0.5rem; border-radius:4px; cursor:pointer; font-size:0.75rem; }
+            me .gh-link { text-decoration:none; }
+            me pre { background:#1a1a1a; border-top:1px solid #2a2a2a; margin:0; padding:0.5rem 0; }
+            me code { font-size:0.8rem; line-height:1.6; color:#ccc; counter-reset:line; }
+            me .code-line { display:block; padding-left:3.5em; white-space:pre-wrap; word-break:break-all; position:relative; }
+            me .code-line::before { content:counter(line); counter-increment:line; position:absolute; left:0; width:2.5em; text-align:right; color:#555; user-select:none; }
+        </style><span class="match-badge" data-show="$tags.length > 0 || $search.trim().length > 0" data-text="$match_node_parse_find_properties"></span><div class="header"><div class="header-left"><span class="tag" style="background:#10b981;">func</span><span class="full-name"><span class="mod">parse.</span><span class="name">find_properties</span></span></div><div class="header-right"></div></div><pre><code class="language-python" id="code-node-parse-find_properties"><span class="code-line">def find_properties(text: str) -&gt; list[dict]:</span><span class="code-line">    return [</span><span class="code-line">        dict(name=m.group(1), syntax=m.group(2),</span><span class="code-line">             inherits=m.group(3) == &quot;true&quot;, initial=m.group(4).strip(),</span><span class="code-line">             line=line_at(text, m.start()), pos=m.start())</span><span class="code-line">        for m in RE_PROPERTY.finditer(text)</span><span class="code-line">    ]</span></code></pre></div><div id="node-parse-find_layer_order" data-signals="{&quot;searchable_node_parse_find_layer_order&quot;: &quot;find_layer_order parse func  def find_layer_order(text: str) -> list[str]:     layers = []     for m in re_layer_order.finditer(text):         raw = re.sub(r   *.*? *  ,   , m.group(1), flags=re.dotall)         layers.extend(name.strip() for name in raw.split( , ) if name.strip())     return layers&quot;, &quot;match_node_parse_find_layer_order&quot;: 0}" data-effect="$match_node_parse_find_layer_order = [...$tags, $search.trim()].filter(t => t.length > 0 &amp;&amp; $searchable_node_parse_find_layer_order.toLowerCase().includes(t.toLowerCase())).length" data-show="($tags.length === 0 &amp;&amp; $search.trim().length === 0) || $match_node_parse_find_layer_order > 0" data-style:order="($tags.length === 0 &amp;&amp; $search.trim().length === 0) ? 0 : -$match_node_parse_find_layer_order"><style>
+            me { margin-bottom:0.75rem; border-radius:8px; overflow:hidden; background:#1e1e1e; position:relative; }
+            me .match-badge { position:absolute; top:1rem; right:1rem; background:#3b82f6; color:white; padding:0.25rem 0.75rem; border-radius:9999px; font-size:0.8rem; font-weight:600; }
+            me .header { display:flex; align-items:center; justify-content:space-between; padding:0.75rem 1rem; }
+            me .header-left { display:flex; align-items:center; gap:0.75rem; }
+            me .header-right { display:flex; align-items:center; gap:0.5rem; }
+            me .tag { padding:0.25rem 0.6rem; border-radius:4px; font-size:0.75rem; font-weight:600; color:white; }
+            me .full-name { font-size:1rem; font-weight:500; }
+            me .mod { color:#666; }
+            me .name { color:#e5e5e5; }
+            me .doc { margin:0; padding:0 1rem 0.5rem; color:#888; font-size:0.85rem; }
+            me .gh-btn { display:flex; align-items:center; gap:0.25rem; background:#333; border:1px solid #444; color:#ccc; padding:0.25rem 0.5rem; border-radius:4px; cursor:pointer; font-size:0.75rem; }
+            me .gh-link { text-decoration:none; }
+            me pre { background:#1a1a1a; border-top:1px solid #2a2a2a; margin:0; padding:0.5rem 0; }
+            me code { font-size:0.8rem; line-height:1.6; color:#ccc; counter-reset:line; }
+            me .code-line { display:block; padding-left:3.5em; white-space:pre-wrap; word-break:break-all; position:relative; }
+            me .code-line::before { content:counter(line); counter-increment:line; position:absolute; left:0; width:2.5em; text-align:right; color:#555; user-select:none; }
+        </style><span class="match-badge" data-show="$tags.length > 0 || $search.trim().length > 0" data-text="$match_node_parse_find_layer_order"></span><div class="header"><div class="header-left"><span class="tag" style="background:#10b981;">func</span><span class="full-name"><span class="mod">parse.</span><span class="name">find_layer_order</span></span></div><div class="header-right"></div></div><pre><code class="language-python" id="code-node-parse-find_layer_order"><span class="code-line">def find_layer_order(text: str) -&gt; list[str]:</span><span class="code-line">    layers = []</span><span class="code-line">    for m in RE_LAYER_ORDER.finditer(text):</span><span class="code-line">        raw = re.sub(r&#x27;/\*.*?\*/&#x27;, &#x27;&#x27;, m.group(1), flags=re.DOTALL)</span><span class="code-line">        layers.extend(name.strip() for name in raw.split(&#x27;,&#x27;) if name.strip())</span><span class="code-line">    return layers</span></code></pre></div><div id="node-parse-find_layer_blocks" data-signals="{&quot;searchable_node_parse_find_layer_blocks&quot;: &quot;find_layer_blocks parse func  def find_layer_blocks(text: str) -> list[str]:     return re_layer_block.findall(text)&quot;, &quot;match_node_parse_find_layer_blocks&quot;: 0}" data-effect="$match_node_parse_find_layer_blocks = [...$tags, $search.trim()].filter(t => t.length > 0 &amp;&amp; $searchable_node_parse_find_layer_blocks.toLowerCase().includes(t.toLowerCase())).length" data-show="($tags.length === 0 &amp;&amp; $search.trim().length === 0) || $match_node_parse_find_layer_blocks > 0" data-style:order="($tags.length === 0 &amp;&amp; $search.trim().length === 0) ? 0 : -$match_node_parse_find_layer_blocks"><style>
+            me { margin-bottom:0.75rem; border-radius:8px; overflow:hidden; background:#1e1e1e; position:relative; }
+            me .match-badge { position:absolute; top:1rem; right:1rem; background:#3b82f6; color:white; padding:0.25rem 0.75rem; border-radius:9999px; font-size:0.8rem; font-weight:600; }
+            me .header { display:flex; align-items:center; justify-content:space-between; padding:0.75rem 1rem; }
+            me .header-left { display:flex; align-items:center; gap:0.75rem; }
+            me .header-right { display:flex; align-items:center; gap:0.5rem; }
+            me .tag { padding:0.25rem 0.6rem; border-radius:4px; font-size:0.75rem; font-weight:600; color:white; }
+            me .full-name { font-size:1rem; font-weight:500; }
+            me .mod { color:#666; }
+            me .name { color:#e5e5e5; }
+            me .doc { margin:0; padding:0 1rem 0.5rem; color:#888; font-size:0.85rem; }
+            me .gh-btn { display:flex; align-items:center; gap:0.25rem; background:#333; border:1px solid #444; color:#ccc; padding:0.25rem 0.5rem; border-radius:4px; cursor:pointer; font-size:0.75rem; }
+            me .gh-link { text-decoration:none; }
+            me pre { background:#1a1a1a; border-top:1px solid #2a2a2a; margin:0; padding:0.5rem 0; }
+            me code { font-size:0.8rem; line-height:1.6; color:#ccc; counter-reset:line; }
+            me .code-line { display:block; padding-left:3.5em; white-space:pre-wrap; word-break:break-all; position:relative; }
+            me .code-line::before { content:counter(line); counter-increment:line; position:absolute; left:0; width:2.5em; text-align:right; color:#555; user-select:none; }
+        </style><span class="match-badge" data-show="$tags.length > 0 || $search.trim().length > 0" data-text="$match_node_parse_find_layer_blocks"></span><div class="header"><div class="header-left"><span class="tag" style="background:#10b981;">func</span><span class="full-name"><span class="mod">parse.</span><span class="name">find_layer_blocks</span></span></div><div class="header-right"></div></div><pre><code class="language-python" id="code-node-parse-find_layer_blocks"><span class="code-line">def find_layer_blocks(text: str) -&gt; list[str]:</span><span class="code-line">    return RE_LAYER_BLOCK.findall(text)</span></code></pre></div><div id="node-parse-find_var_decls" data-signals="{&quot;searchable_node_parse_find_var_decls&quot;: &quot;find_var_decls parse func  def find_var_decls(text: str) -> set[str]:     return set(re_var_decl.findall(text))&quot;, &quot;match_node_parse_find_var_decls&quot;: 0}" data-effect="$match_node_parse_find_var_decls = [...$tags, $search.trim()].filter(t => t.length > 0 &amp;&amp; $searchable_node_parse_find_var_decls.toLowerCase().includes(t.toLowerCase())).length" data-show="($tags.length === 0 &amp;&amp; $search.trim().length === 0) || $match_node_parse_find_var_decls > 0" data-style:order="($tags.length === 0 &amp;&amp; $search.trim().length === 0) ? 0 : -$match_node_parse_find_var_decls"><style>
+            me { margin-bottom:0.75rem; border-radius:8px; overflow:hidden; background:#1e1e1e; position:relative; }
+            me .match-badge { position:absolute; top:1rem; right:1rem; background:#3b82f6; color:white; padding:0.25rem 0.75rem; border-radius:9999px; font-size:0.8rem; font-weight:600; }
+            me .header { display:flex; align-items:center; justify-content:space-between; padding:0.75rem 1rem; }
+            me .header-left { display:flex; align-items:center; gap:0.75rem; }
+            me .header-right { display:flex; align-items:center; gap:0.5rem; }
+            me .tag { padding:0.25rem 0.6rem; border-radius:4px; font-size:0.75rem; font-weight:600; color:white; }
+            me .full-name { font-size:1rem; font-weight:500; }
+            me .mod { color:#666; }
+            me .name { color:#e5e5e5; }
+            me .doc { margin:0; padding:0 1rem 0.5rem; color:#888; font-size:0.85rem; }
+            me .gh-btn { display:flex; align-items:center; gap:0.25rem; background:#333; border:1px solid #444; color:#ccc; padding:0.25rem 0.5rem; border-radius:4px; cursor:pointer; font-size:0.75rem; }
+            me .gh-link { text-decoration:none; }
+            me pre { background:#1a1a1a; border-top:1px solid #2a2a2a; margin:0; padding:0.5rem 0; }
+            me code { font-size:0.8rem; line-height:1.6; color:#ccc; counter-reset:line; }
+            me .code-line { display:block; padding-left:3.5em; white-space:pre-wrap; word-break:break-all; position:relative; }
+            me .code-line::before { content:counter(line); counter-increment:line; position:absolute; left:0; width:2.5em; text-align:right; color:#555; user-select:none; }
+        </style><span class="match-badge" data-show="$tags.length > 0 || $search.trim().length > 0" data-text="$match_node_parse_find_var_decls"></span><div class="header"><div class="header-left"><span class="tag" style="background:#10b981;">func</span><span class="full-name"><span class="mod">parse.</span><span class="name">find_var_decls</span></span></div><div class="header-right"></div></div><pre><code class="language-python" id="code-node-parse-find_var_decls"><span class="code-line">def find_var_decls(text: str) -&gt; set[str]:</span><span class="code-line">    return set(RE_VAR_DECL.findall(text))</span></code></pre></div><div id="node-parse-find_var_refs" data-signals="{&quot;searchable_node_parse_find_var_refs&quot;: &quot;find_var_refs parse func  def find_var_refs(text: str) -> set[str]:     return set(re_var_use.findall(text))&quot;, &quot;match_node_parse_find_var_refs&quot;: 0}" data-effect="$match_node_parse_find_var_refs = [...$tags, $search.trim()].filter(t => t.length > 0 &amp;&amp; $searchable_node_parse_find_var_refs.toLowerCase().includes(t.toLowerCase())).length" data-show="($tags.length === 0 &amp;&amp; $search.trim().length === 0) || $match_node_parse_find_var_refs > 0" data-style:order="($tags.length === 0 &amp;&amp; $search.trim().length === 0) ? 0 : -$match_node_parse_find_var_refs"><style>
+            me { margin-bottom:0.75rem; border-radius:8px; overflow:hidden; background:#1e1e1e; position:relative; }
+            me .match-badge { position:absolute; top:1rem; right:1rem; background:#3b82f6; color:white; padding:0.25rem 0.75rem; border-radius:9999px; font-size:0.8rem; font-weight:600; }
+            me .header { display:flex; align-items:center; justify-content:space-between; padding:0.75rem 1rem; }
+            me .header-left { display:flex; align-items:center; gap:0.75rem; }
+            me .header-right { display:flex; align-items:center; gap:0.5rem; }
+            me .tag { padding:0.25rem 0.6rem; border-radius:4px; font-size:0.75rem; font-weight:600; color:white; }
+            me .full-name { font-size:1rem; font-weight:500; }
+            me .mod { color:#666; }
+            me .name { color:#e5e5e5; }
+            me .doc { margin:0; padding:0 1rem 0.5rem; color:#888; font-size:0.85rem; }
+            me .gh-btn { display:flex; align-items:center; gap:0.25rem; background:#333; border:1px solid #444; color:#ccc; padding:0.25rem 0.5rem; border-radius:4px; cursor:pointer; font-size:0.75rem; }
+            me .gh-link { text-decoration:none; }
+            me pre { background:#1a1a1a; border-top:1px solid #2a2a2a; margin:0; padding:0.5rem 0; }
+            me code { font-size:0.8rem; line-height:1.6; color:#ccc; counter-reset:line; }
+            me .code-line { display:block; padding-left:3.5em; white-space:pre-wrap; word-break:break-all; position:relative; }
+            me .code-line::before { content:counter(line); counter-increment:line; position:absolute; left:0; width:2.5em; text-align:right; color:#555; user-select:none; }
+        </style><span class="match-badge" data-show="$tags.length > 0 || $search.trim().length > 0" data-text="$match_node_parse_find_var_refs"></span><div class="header"><div class="header-left"><span class="tag" style="background:#10b981;">func</span><span class="full-name"><span class="mod">parse.</span><span class="name">find_var_refs</span></span></div><div class="header-right"></div></div><pre><code class="language-python" id="code-node-parse-find_var_refs"><span class="code-line">def find_var_refs(text: str) -&gt; set[str]:</span><span class="code-line">    return set(RE_VAR_USE.findall(text))</span></code></pre></div></div></div></div></div></body></html>
