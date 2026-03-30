@@ -37,24 +37,6 @@ def lint_notebook(notebook_path: str) -> Report:
     return report
 
 
-@app.function
-def main():
-    args = sys.argv[1:]
-
-    # single notebook mode: css-lint notebook.py
-    if args and args[0].endswith(".py"):
-        report = lint_notebook(args[0])
-        log_path = Path("css_lint.log")
-    else:
-        root = find_root()
-        report = lint_project(root)
-        log_path = root / "css_lint.log"
-
-    write_log(report, log_path)
-    print_summary(report, log_path)
-    sys.exit(1 if report.errors else 0)
-
-
 @app.cell
 def _(export_all):
     def cmd_extract(args: list[str]):
