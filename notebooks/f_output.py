@@ -5,21 +5,43 @@ app = marimo.App(width="medium")
 
 with app.setup:
     from pathlib import Path
-    from  a_types import Report
+    from a_types import Report
 
-    B, D, R, RE, YE, CY, GR = ( "\033[1m", "\033[2m", "\033[0m", "\033[31m", "\033[33m", "\033[36m", "\033[32m" )
+    B  = "\033[1m"
+    D  = "\033[2m"
+    R  = "\033[0m"
+    RE = "\033[31m"
+    YE = "\033[33m"
+    CY = "\033[36m"
+    GR = "\033[32m"
+
+
+
+
+@app.function
+def colorize(n, zero=GR, bad=RE):
+    return f"{zero if n == 0 else bad}{n}{R}"
 
 
 @app.function
 def print_summary(report: Report, log_path: Path):
-    _c = lambda n, zero=GR, bad=RE: f"{zero if n == 0 else bad}{n}{R}"
     print(f"  {D}@properties{R}  {CY}{len(report.properties)}{R}")
     print(f"  {D}layers{R}       {CY}{len(report.layers_declared)}{R}")
     print(f"  {D}lines{R}        {CY}{report.total_lines}{R}")
     print(f"  {D}size{R}         {CY}{report.total_bytes / 1024:.1f} kB{R}")
-    print(f"  {D}warnings{R}     {_c(report.warns, bad=YE)}")
-    print(f"  {D}errors{R}       {_c(report.errors)}")
+    print(f"  {D}warnings{R}     {colorize(report.warns, bad=YE)}")
+    print(f"  {D}errors{R}       {colorize(report.errors)}")
     print(f"  {D}log{R}          {D}{log_path}{R}")
+
+
+@app.function
+def print_oneline(report: Report):
+    e, w = report.errors, report.warns
+    p, ly = len(report.properties), len(report.layers_declared)
+    sz = f"{report.total_bytes / 1024:.1f}kB"
+    ec = GR if e == 0 else RE
+    wc = GR if w == 0 else YE
+    print(f"  {CY}{report.total_lines}L {sz}{R} | {p} props {ly} layers | {wc}{w}W{R} {ec}{e}E{R}")
 
 
 @app.function
@@ -51,11 +73,6 @@ def write_log(report: Report, path: Path):
         lines.append("  none")
 
     path.write_text("\n".join(lines))
-
-
-@app.cell
-def _():
-    return
 
 
 if __name__ == "__main__":

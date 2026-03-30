@@ -19,12 +19,22 @@ def lint_notebook(notebook_path: str) -> Report:
     return report
 
 def cmd_extract(args: list[str]):
-    directory = args[0] if args else "./notebooks"
-    out_dir = args[1] if len(args) > 1 else None
+    do_min = "--min" in args
+    rest = [a for a in args if a != "--min"]
+
+    directory = rest[0] if rest else "./notebooks"
+    out_dir = rest[1] if len(rest) > 1 else None
     paths = export_all(directory, out_dir)
+
+    if do_min:
+        from .minify import minify
+        for p in paths:
+            p.write_text(minify(p.read_text()))
+
     for p in paths:
-        print(f"  {p}")
-    print(f"\n  {len(paths)} file{'s' * (len(paths) != 1)} extracted")
+        sz = f"{p.stat().st_size / 1024:.1f}kB"
+        print(f"  {p} ({sz})")
+    print(f"\n  {len(paths)} file{'s' * (len(paths) != 1)} extracted{' (minified)' if do_min else ''}")
 
 def cmd_lint(args: list[str]):
     if args and args[0].endswith(".css"):

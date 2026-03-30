@@ -14,6 +14,7 @@ with app.setup:
     SKIP = {".venv", "node_modules", "dist"}
 
 
+
 @app.function
 def should_skip(path: Path, root: Path) -> bool:
     rel = str(path.relative_to(root))
@@ -34,23 +35,27 @@ def lint_file(path: Path, report: Report, root: Path):
     rel = str(path.relative_to(root))
     text = path.read_text()
 
+    # stats
     report.total_lines += text.count('\n') + 1
     report.total_bytes += path.stat().st_size
 
-    report.properties.extend(
-        {**p, "file": rel} for p in find_properties(text)
-    )
+    # properties
+    report.properties.extend({**p, "file": rel} for p in find_properties(text))
 
-    order = find_layer_order(text)
-    if order:
-        report.layers_declared.extend(order)
+    # layers — dedup into report
+    for layer in find_layer_order(text):
+        if layer not in report.layers_declared:
+            report.layers_declared.append(layer)
 
     for name in find_layer_blocks(text):
-        report.layers_used[name].append(rel)
+        if rel not in report.layers_used.get(name, []):
+            report.layers_used[name].append(rel)
 
+    # variables
     report.var_decls |= find_var_decls(text)
     report.var_refs |= find_var_refs(text)
 
+    # rules
     for rule in ALL_RULES:
         report.issues.extend(rule(text, rel))
 

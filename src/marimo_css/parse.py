@@ -1,7 +1,7 @@
 import re
 
 RE_PROPERTY = re.compile('@property\\s+(--[\\w-]+)\\s*\\{\\s*syntax:\\s*"([^"]+)";\\s*inherits:\\s*(true|false);\\s*initial-value:\\s*([^;]+);\\s*\\}')
-RE_LAYER_ORDER = re.compile('@layer\\s+([\\w.:,\\s/*-]+);', re.DOTALL)
+RE_LAYER_ORDER = re.compile('@layer\\s+([^;{]+);', re.DOTALL)
 RE_LAYER_BLOCK = re.compile('@layer\\s+([\\w.:]+)\\s*\\{')
 RE_VAR_DECL = re.compile('(--[\\w-]+)\\s*:')
 RE_VAR_USE = re.compile('var\\((--[\\w-]+)')
@@ -22,13 +22,18 @@ def find_properties(text: str) -> list[dict]:
 
 def find_layer_order(text: str) -> list[str]:
     layers = []
+    seen = set()
     for m in RE_LAYER_ORDER.finditer(text):
         raw = re.sub(r'/\*.*?\*/', '', m.group(1), flags=re.DOTALL)
-        layers.extend(name.strip() for name in raw.split(',') if name.strip())
+        for name in raw.split(','):
+            name = name.strip()
+            if name and name not in seen:
+                seen.add(name)
+                layers.append(name)
     return layers
 
 def find_layer_blocks(text: str) -> list[str]:
-    return RE_LAYER_BLOCK.findall(text)
+    return list(dict.fromkeys(RE_LAYER_BLOCK.findall(text)))  # dedup, preserve order
 
 def find_var_decls(text: str) -> set[str]:
     return set(RE_VAR_DECL.findall(text))

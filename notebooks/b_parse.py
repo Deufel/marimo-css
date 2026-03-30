@@ -12,10 +12,11 @@ with app.setup:
         r'inherits:\s*(true|false);\s*'
         r'initial-value:\s*([^;]+);\s*\}'
     )
-    RE_LAYER_ORDER = re.compile(r'@layer\s+([\w.:,\s/*-]+);', re.DOTALL)
+    RE_LAYER_ORDER = re.compile(r'@layer\s+([^;{]+);', re.DOTALL)  # fixed: was choking on comment chars
     RE_LAYER_BLOCK = re.compile(r'@layer\s+([\w.:]+)\s*\{')
     RE_VAR_DECL = re.compile(r'(--[\w-]+)\s*:')
     RE_VAR_USE = re.compile(r'var\((--[\w-]+)')
+
 
 
 @app.function
@@ -41,15 +42,20 @@ def find_properties(text: str) -> list[dict]:
 @app.function
 def find_layer_order(text: str) -> list[str]:
     layers = []
+    seen = set()
     for m in RE_LAYER_ORDER.finditer(text):
         raw = re.sub(r'/\*.*?\*/', '', m.group(1), flags=re.DOTALL)
-        layers.extend(name.strip() for name in raw.split(',') if name.strip())
+        for name in raw.split(','):
+            name = name.strip()
+            if name and name not in seen:
+                seen.add(name)
+                layers.append(name)
     return layers
 
 
 @app.function
 def find_layer_blocks(text: str) -> list[str]:
-    return RE_LAYER_BLOCK.findall(text)
+    return list(dict.fromkeys(RE_LAYER_BLOCK.findall(text)))  # dedup, preserve order
 
 
 @app.function
