@@ -1,22 +1,23 @@
 [project]
 name = "marimo-css"
-version = "0.1.5"
+version = "0.1.11"
 description = "Write CSS in a marimo notebook"
 readme = "README.md"
 authors = [
     { name = "Deufel", email = "MDeufel13@gmail.com" }
 ]
 requires-python = ">=3.14"
-dependencies = [
-    "anthropic>=0.86.0",
-    "marimo>=0.21.1",
-    "marimo-dev>=0.3.8",
-    "pydantic-ai-slim>=1.73.0",
-]
+dependencies = []
 
 [build-system]
 requires = ["uv_build>=0.9.18,<0.10.0"]
 build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "marimo>=0.23.7",
+    "marimo-dev>=0.4.4",
+]
 
 
 [project.scripts]

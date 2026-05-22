@@ -4,8 +4,9 @@ from .extract import get_css, export_all, find_notebooks
 from .lint import lint_project, find_root, lint_file
 from .output import print_summary, write_log
 from .types import Report
+from .min import minify
 
-USAGE = '    usage: css <command> [args]\n\n    commands:\n      extract   notebooks → css files     (default: ./notebooks/*.py)\n      lint      lint .css files            (default: project-wide)\n      check     extract + lint + cleanup   (default: ./notebooks/*.py)\n    '
+USAGE = '    usage: css <command> [args]\n\n    commands:\n      extract   notebooks → css files      (default: ./notebooks/*.py)\n      lint      lint .css files            (default: project-wide)\n      check     extract + lint + cleanup   (default: ./notebooks/*.py)\n      minify    rm white space & comments  (use on file)\n    '
 
 def lint_notebook(notebook_path: str) -> Report:
     """Extract CSS from a marimo notebook and lint it."""
@@ -27,7 +28,6 @@ def cmd_extract(args: list[str]):
     paths = export_all(directory, out_dir)
 
     if do_min:
-        from .minify import minify
         for p in paths:
             p.write_text(minify(p.read_text()))
 
@@ -76,6 +76,12 @@ def cmd_check(args: list[str]):
     print_summary(report, log_path)
     sys.exit(1 if report.errors else 0)
 
+def cmd_minify(args: list[str]):
+    """Strip comments + whitespace from a .css file, print to stdout."""
+    if not args:
+        print("  usage: css minify <file.css>"); sys.exit(1)
+    print(minify(Path(args[0]).read_text()))
+
 def main():
     args = sys.argv[1:]
 
@@ -87,8 +93,9 @@ def main():
 
     commands = {
         "extract": cmd_extract,
-        "lint": cmd_lint,
-        "check": cmd_check,
+        "lint":    cmd_lint,
+        "check":   cmd_check,
+        "minify":  cmd_minify,  
     }
 
     if cmd not in commands:

@@ -42,12 +42,23 @@ def brace_depth(text: str, pos: int) -> int:
     return text[:pos].count('{') - text[:pos].count('}')
 
 def find_properties(text: str) -> list[dict]:
-    return [
-        dict(name=m.group(1), syntax=m.group(2),
-             inherits=m.group(3) == "true", initial=m.group(4).strip(),
-             line=line_at(text, m.start()), pos=m.start())
-        for m in RE_PROPERTY.finditer(text)
-    ]
+    """Parse every @property block. Descriptors are read independently,
+    so declaration order and spacing don't matter. A missing descriptor
+    comes back as None — check_property_descriptors flags those."""
+    props = []
+    for m in RE_PROPERTY_BLOCK.finditer(text):
+        name, body = m.group(1), m.group(2)
+        syn = RE_DESC_SYNTAX.search(body)
+        inh = RE_DESC_INHERITS.search(body)
+        ini = RE_DESC_INITIAL.search(body)
+        props.append(dict(
+            name=name,
+            syntax=syn.group(1) if syn else None,
+            inherits=(inh.group(1) == "true") if inh else None,
+            initial=ini.group(1).strip() if ini else None,
+            line=line_at(text, m.start()), pos=m.start(),
+        ))
+    return props
 
 def find_layer_order(text: str) -> list[str]:
     layers = []
@@ -62,16 +73,31 @@ def find_layer_order(text: str) -> list[str]:
     return layers
 
 def find_layer_blocks(text: str) -> list[str]:
-    return list(dict.fromkeys(RE_LAYER_BLOCK.findall(text)))  # dedup, preserve order
+    return list(dict.fromkeys(RE_LAYER_BLOCK.findall(text)))
 
 def find_var_decls(text: str) -> set[str]:
+    text = re.sub(r'/\*.*?\*/', '', text, flags=re.DOTALL)   # skip comments
     return set(RE_VAR_DECL.findall(text))
 
 def find_var_refs(text: str) -> set[str]:
+    text = re.sub(r'/\*.*?\*/', '', text, flags=re.DOTALL)
     return set(RE_VAR_USE.findall(text))
 
 ## rules
 
+
+def check_property_descriptors(text: str, file: str) -> list[Issue]:
+    """@property needs syntax, inherits, and initial-value to be valid CSS."""
+    issues = []
+    for p in find_properties(text):
+        missing = [d for d, v in (("syntax", p["syntax"]),
+                                  ("inherits", p["inherits"]),
+                                  ("initial-value", p["initial"]))
+                   if v is None]
+        if missing:
+            issues.append(Issue(file, p["line"], "error",
+                f"@property {p['name']} missing: {', '.join(missing)}"))
+    return issues
 
 def check_nested_properties(text: str, file: str) -> list[Issue]:
     """@property must sit at brace depth 0."""
@@ -83,10 +109,11 @@ def check_nested_properties(text: str, file: str) -> list[Issue]:
     ]
 
 def check_hex_colors(text: str, file: str) -> list[Issue]:
+    text = re.sub(r'/\*.*?\*/', '', text, flags=re.DOTALL)   # skip comments
     return [
-        Issue(file, i, "warn", "raw hex color — use token?")
+        Issue(file, i, "warn", "raw hex color — use a token?")
         for i, ln in enumerate(text.splitlines(), 1)
-        if re.search(r'(?<!-)#[0-9a-fA-F]{3,8}\b', ln)
+        if re.search(r'(?<![-\w])#[0-9a-fA-F]{3,8}\b', ln)
     ]
 
 def check_motion(text: str, file: str) -> list[Issue]:
@@ -109,6 +136,13 @@ def check_unused_layers(declared: list[str], used: dict) -> list[Issue]:
         Issue("", 0, "warn", f"layer '{layer}' declared but unused")
         for layer in declared
         if layer not in used
+    ]
+
+def check_undeclared_vars(decls: set, refs: set) -> list[Issue]:
+    """var(--x) where --x is never declared anywhere — usually a typo."""
+    return [
+        Issue("", 0, "warn", f"variable '{v}' used but never declared")
+        for v in sorted(refs - decls)
     ]
 
 ## extract
@@ -197,14 +231,12 @@ def lint_file(path: Path, report: Report, root: Path):
 def lint_project(root: Path = None) -> Report:
     root = root or find_root()
     report = Report()
-
     for path in sorted(root.rglob("*.css")):
         if not should_skip(path, root):
             lint_file(path, report, root)
-
     report.issues.extend(check_undeclared_layers(report.layers_declared, report.layers_used))
     report.issues.extend(check_unused_layers(report.layers_declared, report.layers_used))
-
+    report.issues.extend(check_undeclared_vars(report.var_decls, report.var_refs))   # new
     return report
 
 ## output
@@ -244,12 +276,24 @@ def write_log(report: Report, path: Path):
         status = "✓" if layer in used else "✗"
         lines.append(f"  {i+1:>3}. {layer:<28} {status}")
 
+        
     lines.append("\nVARIABLES")
-    lines.append(f"  declared: {len(report.var_decls)}  referenced: {len(report.var_refs)}")
-    unused = sorted(report.var_decls - report.var_refs)
-    if unused:
-        lines.append(f"  unreferenced: {', '.join(unused)}")
+    decls, refs = report.var_decls, report.var_refs
+    used_and_declared = sorted(decls & refs)
+    declared_unused   = sorted(decls - refs)
+    used_undeclared   = sorted(refs - decls)
 
+    lines.append(f"  {len(used_and_declared)} declared & used")
+    for v in used_and_declared:
+        lines.append(f"    ok    {v}")
+    lines.append(f"  {len(declared_unused)} declared, never used")
+    for v in declared_unused:
+        lines.append(f"    unused {v}")
+    lines.append(f"  {len(used_undeclared)} used, never declared")
+    for v in used_undeclared:
+        lines.append(f"    MISSING {v}")
+
+        
     lines.append("\nISSUES")
     for iss in sorted(report.issues, key=lambda i: (i.file, i.line)):
         tag = "ERR" if iss.level == "error" else "WRN"
@@ -282,7 +326,6 @@ def cmd_extract(args: list[str]):
     paths = export_all(directory, out_dir)
 
     if do_min:
-        from .minify import minify
         for p in paths:
             p.write_text(minify(p.read_text()))
 
@@ -331,6 +374,12 @@ def cmd_check(args: list[str]):
     print_summary(report, log_path)
     sys.exit(1 if report.errors else 0)
 
+def cmd_minify(args: list[str]):
+    """Strip comments + whitespace from a .css file, print to stdout."""
+    if not args:
+        print("  usage: css minify <file.css>"); sys.exit(1)
+    print(minify(Path(args[0]).read_text()))
+
 def main():
     args = sys.argv[1:]
 
@@ -342,8 +391,9 @@ def main():
 
     commands = {
         "extract": cmd_extract,
-        "lint": cmd_lint,
-        "check": cmd_check,
+        "lint":    cmd_lint,
+        "check":   cmd_check,
+        "minify":  cmd_minify,  
     }
 
     if cmd not in commands:

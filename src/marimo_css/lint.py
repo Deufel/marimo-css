@@ -1,9 +1,9 @@
 from pathlib import Path
 from .types import Report
 from .parse import find_properties, find_layer_order, find_layer_blocks, find_var_decls, find_var_refs
-from .rules import check_undeclared_layers, check_unused_layers, check_hex_colors, check_motion, check_nested_properties
+from .rules import check_undeclared_layers, check_unused_layers, check_hex_colors, check_motion, check_nested_properties, check_property_descriptors, check_undeclared_vars
 
-ALL_RULES = [check_nested_properties, check_hex_colors, check_motion]
+ALL_RULES = [check_nested_properties, check_property_descriptors, check_hex_colors, check_motion]
 SKIP = {'.venv', 'node_modules', 'dist'}
 
 def should_skip(path: Path, root: Path) -> bool:
@@ -48,12 +48,10 @@ def lint_file(path: Path, report: Report, root: Path):
 def lint_project(root: Path = None) -> Report:
     root = root or find_root()
     report = Report()
-
     for path in sorted(root.rglob("*.css")):
         if not should_skip(path, root):
             lint_file(path, report, root)
-
     report.issues.extend(check_undeclared_layers(report.layers_declared, report.layers_used))
     report.issues.extend(check_unused_layers(report.layers_declared, report.layers_used))
-
+    report.issues.extend(check_undeclared_vars(report.var_decls, report.var_refs))   # new
     return report
