@@ -1,6 +1,6 @@
 # marimo-css
 
-> 
+> Write CSS in a marimo notebook
 
 - [types](/types): Issue, Report
 - [parse](/parse): line_at, brace_depth, find_properties, find_layer_order, find_layer_blocks, find_var_decls, find_var_refs

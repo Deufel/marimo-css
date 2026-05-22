@@ -1,6 +1,6 @@
 import marimo
 
-__generated_with = "0.21.1"
+__generated_with = "0.23.7"
 app = marimo.App(width="medium")
 
 with app.setup:
@@ -14,8 +14,6 @@ with app.setup:
     YE = "\033[33m"
     CY = "\033[36m"
     GR = "\033[32m"
-
-
 
 
 @app.function
@@ -59,12 +57,24 @@ def write_log(report: Report, path: Path):
         status = "✓" if layer in used else "✗"
         lines.append(f"  {i+1:>3}. {layer:<28} {status}")
 
+        
     lines.append("\nVARIABLES")
-    lines.append(f"  declared: {len(report.var_decls)}  referenced: {len(report.var_refs)}")
-    unused = sorted(report.var_decls - report.var_refs)
-    if unused:
-        lines.append(f"  unreferenced: {', '.join(unused)}")
+    decls, refs = report.var_decls, report.var_refs
+    used_and_declared = sorted(decls & refs)
+    declared_unused   = sorted(decls - refs)
+    used_undeclared   = sorted(refs - decls)
 
+    lines.append(f"  {len(used_and_declared)} declared & used")
+    for v in used_and_declared:
+        lines.append(f"    ok    {v}")
+    lines.append(f"  {len(declared_unused)} declared, never used")
+    for v in declared_unused:
+        lines.append(f"    unused {v}")
+    lines.append(f"  {len(used_undeclared)} used, never declared")
+    for v in used_undeclared:
+        lines.append(f"    MISSING {v}")
+
+        
     lines.append("\nISSUES")
     for iss in sorted(report.issues, key=lambda i: (i.file, i.line)):
         tag = "ERR" if iss.level == "error" else "WRN"

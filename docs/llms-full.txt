@@ -1,6 +1,6 @@
 # marimo-css
 
-> 
+> Write CSS in a marimo notebook
 
 
 ## types

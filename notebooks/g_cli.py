@@ -1,6 +1,6 @@
 import marimo
 
-__generated_with = "0.21.1"
+__generated_with = "0.23.7"
 app = marimo.App()
 
 with app.setup:
@@ -11,15 +11,17 @@ with app.setup:
     from e_lint import lint_project, find_root, lint_file
     from f_output import print_summary, write_log
     from a_types import Report
+    from h_min import minify
 
 
     USAGE = """\
     usage: css <command> [args]
 
     commands:
-      extract   notebooks → css files     (default: ./notebooks/*.py)
+      extract   notebooks → css files      (default: ./notebooks/*.py)
       lint      lint .css files            (default: project-wide)
       check     extract + lint + cleanup   (default: ./notebooks/*.py)
+      minify    rm white space & comments  (use on file)
     """
 
 
@@ -46,7 +48,6 @@ def cmd_extract(args: list[str]):
     paths = export_all(directory, out_dir)
 
     if do_min:
-        from .minify import minify
         for p in paths:
             p.write_text(minify(p.read_text()))
 
@@ -101,6 +102,14 @@ def cmd_check(args: list[str]):
 
 
 @app.function
+def cmd_minify(args: list[str]):
+    """Strip comments + whitespace from a .css file, print to stdout."""
+    if not args:
+        print("  usage: css minify <file.css>"); sys.exit(1)
+    print(minify(Path(args[0]).read_text()))
+
+
+@app.function
 def main():
     args = sys.argv[1:]
 
@@ -112,8 +121,9 @@ def main():
 
     commands = {
         "extract": cmd_extract,
-        "lint": cmd_lint,
-        "check": cmd_check,
+        "lint":    cmd_lint,
+        "check":   cmd_check,
+        "minify":  cmd_minify,  
     }
 
     if cmd not in commands:
@@ -122,6 +132,11 @@ def main():
         sys.exit(1)
 
     commands[cmd](rest)
+
+
+@app.cell
+def _():
+    return
 
 
 if __name__ == "__main__":
