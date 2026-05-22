@@ -8,49 +8,105 @@
     {
       "id": "setup",
       "code_hash": "54a32dad841223f0e73b443bef121366",
-      "outputs": [],
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
       "console": []
     },
     {
       "id": "Hbol",
       "code_hash": "7d1c53de4f493e8da82646ac8b8e3d33",
-      "outputs": [],
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
       "console": []
     },
     {
       "id": "MJUe",
       "code_hash": "2e41f20abcb86b063955e712efbfd6fd",
-      "outputs": [],
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
       "console": []
     },
     {
       "id": "vblA",
       "code_hash": "bbde3ebc075974db2f4117cd3f6f8283",
-      "outputs": [],
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
       "console": []
     },
     {
       "id": "bkHC",
       "code_hash": "a9737dd52b05e52b30b8457238c4abc8",
-      "outputs": [],
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
       "console": []
     },
     {
       "id": "lEQa",
       "code_hash": "c1780270107a0ff6d538d8224d86d5e2",
-      "outputs": [],
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
       "console": []
     },
     {
       "id": "PKri",
-      "code_hash": "84a7e8c714bf12041a282f60d5ca7a25",
-      "outputs": [],
+      "code_hash": "6820d2d1565884cd0bb8317f9d1efb7c",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
       "console": []
     },
     {
       "id": "Xref",
       "code_hash": "41dc6892354aa9e3688576f7c67f839d",
-      "outputs": [],
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
       "console": []
     }
   ]

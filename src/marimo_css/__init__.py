@@ -1,5 +1,5 @@
 """Write CSS in a marimo notebook"""
-__version__ = '0.1.11'
+__version__ = '0.1.12'
 __author__ = 'Deufel'
 from .types import Issue, Report
 from .parse import line_at, brace_depth, find_properties, find_layer_order, find_layer_blocks, find_var_decls, find_var_refs

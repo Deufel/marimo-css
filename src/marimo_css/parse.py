@@ -50,8 +50,10 @@ def find_layer_blocks(text: str) -> list[str]:
     return list(dict.fromkeys(RE_LAYER_BLOCK.findall(text)))
 
 def find_var_decls(text: str) -> set[str]:
-    text = re.sub(r'/\*.*?\*/', '', text, flags=re.DOTALL)   # skip comments
-    return set(RE_VAR_DECL.findall(text))
+    text = re.sub(r'/\*.*?\*/', '', text, flags=re.DOTALL)
+    assigned   = set(RE_VAR_DECL.findall(text))
+    propertied = {p["name"] for p in find_properties(text)}   # @property counts too
+    return assigned | propertied
 
 def find_var_refs(text: str) -> set[str]:
     text = re.sub(r'/\*.*?\*/', '', text, flags=re.DOTALL)

@@ -10,14 +10,18 @@ with app.setup:
 
 
 @app.function
-def check_property_descriptors(text: str, file: str) -> list[Issue]:
+def check_property_descriptors(
+    text: str, 
+    file: str
+) -> list[Issue]:
     """@property needs syntax, inherits, and initial-value to be valid CSS."""
     issues = []
     for p in find_properties(text):
-        missing = [d for d, v in (("syntax", p["syntax"]),
-                                  ("inherits", p["inherits"]),
-                                  ("initial-value", p["initial"]))
-                   if v is None]
+        required = [("syntax", p["syntax"]), ("inherits", p["inherits"])]
+        # initial-value is optional (and often disallowed) for the universal syntax
+        if p["syntax"] != "*":
+            required.append(("initial-value", p["initial"]))
+        missing = [d for d, v in required if v is None]
         if missing:
             issues.append(Issue(file, p["line"], "error",
                 f"@property {p['name']} missing: {', '.join(missing)}"))
